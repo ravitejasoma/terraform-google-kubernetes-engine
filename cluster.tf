@@ -198,6 +198,17 @@ resource "google_container_node_pool" "pools" {
         "disable-legacy-endpoints" = var.disable_legacy_metadata_endpoints
       },
     )
+    dynamic "taint" {
+      for_each = concat(
+        local.node_pools_taints["all"],
+        local.node_pools_taints[each.value["name"]],
+      )
+      content {
+        effect = taint.value.effect
+        key    = taint.value.key
+        value  = taint.value.value
+      }
+    }
     tags = concat(
       lookup(local.node_pools_tags, "default_values", [true, true])[0] ? [local.cluster_network_tag] : [],
       lookup(local.node_pools_tags, "default_values", [true, true])[1] ? ["${local.cluster_network_tag}-${each.value["name"]}"] : [],
@@ -251,8 +262,8 @@ resource "google_container_node_pool" "pools" {
 
 module "gcloud_wait_for_cluster" {
   source  = "terraform-google-modules/gcloud/google"
-  version = "~> 1.3.0"
-  enabled = var.skip_provisioners
+  version = "~> 2.0.2"
+  enabled = ! var.skip_provisioners
 
   upgrade       = var.gcloud_upgrade
   skip_download = var.gcloud_skip_download

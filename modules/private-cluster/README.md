@@ -8,10 +8,10 @@ The resources/services/activations/deletions that this module will create/trigge
 - Activate network policy if `network_policy` is true
 - Add `ip-masq-agent` configmap with provided `non_masquerade_cidrs` if `configure_ip_masq` is true
 
-Sub modules are provided from creating private clusters, beta private clusters, and beta public clusters as well.  Beta sub modules allow for the use of various GKE beta features. See the modules directory for the various sub modules.
+Sub modules are provided for creating private clusters, beta private clusters, and beta public clusters as well.  Beta sub modules allow for the use of various GKE beta features. See the modules directory for the various sub modules.
 
 ## Private Cluster Details
-For details on configuring private clusters with this module, check the [troubleshooting guide](../../docs/private_clusters.md).
+For details on configuring private clusters with this module, check the [troubleshooting guide](https://github.com/terraform-google-modules/terraform-google-kubernetes-engine/blob/master/docs/private_clusters.md).
 
 ## Compatibility
 
@@ -21,7 +21,7 @@ This module is meant for use with Terraform 0.12. If you haven't
 intended for Terraform 0.11.x is [3.0.0].
 
 ## Usage
-There are multiple examples included in the [examples](./examples/) folder but simple usage is as follows:
+There are multiple examples included in the [examples](https://github.com/terraform-google-modules/terraform-google-kubernetes-engine/tree/master/examples) folder but simple usage is as follows:
 
 ```hcl
 module "gke" {
@@ -150,6 +150,7 @@ Then perform the following commands on the root folder:
 | node\_pools\_metadata | Map of maps containing node metadata by node-pool name | map(map(string)) | `<map>` | no |
 | node\_pools\_oauth\_scopes | Map of lists containing node oauth scopes by node-pool name | map(list(string)) | `<map>` | no |
 | node\_pools\_tags | Map of lists containing node network tags by node-pool name | map(list(string)) | `<map>` | no |
+| node\_pools\_taints | Map of lists containing node taints by node-pool name | object | `<map>` | no |
 | non\_masquerade\_cidrs | List of strings in CIDR notation that specify the IP address ranges that do not use IP masquerading. | list(string) | `<list>` | no |
 | project\_id | The project ID to host the cluster in (required) | string | n/a | yes |
 | region | The region to host the cluster in (optional if zonal cluster / required if regional) | string | `"null"` | no |
